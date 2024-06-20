@@ -26,12 +26,13 @@ public class FtpService
 
     #region Connect Async
 
-    #endregion
     public async Task ConnectAsync()
     {
         var token = new CancellationToken();
         await _ftp.Connect(token);
     }
+
+    #endregion
 
     public async Task<bool> CheckDirectoryExistsAsync(string directory)
     {

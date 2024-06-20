@@ -99,7 +99,6 @@ namespace DotNet8.FluentFtpSample.Services
             }
             finally
             {
-                // Delete the temporary file
                 if (File.Exists(tempFilePath))
                 {
                     File.Delete(tempFilePath);

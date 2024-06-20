@@ -125,7 +125,6 @@ public class FtpService
 
     #region Delete File Async
 
-    #endregion
     public async Task DeleteFileAsync(string filePath)
     {
         try
@@ -145,4 +144,6 @@ public class FtpService
             Console.WriteLine(ex.Message);
         }
     }
+
+    #endregion
 }

@@ -1,6 +1,5 @@
 ﻿using DotNet8.FluentFtpSample.Models;
 using DotNet8.FluentFtpSample.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNet8.FluentFtpSample.Controllers

@@ -56,7 +56,6 @@ public class FtpService
 
     #region Create Directory Async
 
-    #endregion
     public async Task<bool> CreateDirectoryAsync(string directory)
     {
         try
@@ -76,6 +75,8 @@ public class FtpService
             throw;
         }
     }
+
+    #endregion
 
     public async Task UploadFileAsync(IFormFile file, string directory)
     {

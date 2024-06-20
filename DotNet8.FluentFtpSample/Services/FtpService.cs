@@ -24,6 +24,9 @@ public class FtpService
         };
     }
 
+    #region Connect Async
+
+    #endregion
     public async Task ConnectAsync()
     {
         var token = new CancellationToken();

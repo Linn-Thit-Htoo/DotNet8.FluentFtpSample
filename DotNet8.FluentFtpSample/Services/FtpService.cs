@@ -54,6 +54,9 @@ public class FtpService
 
     #endregion
 
+    #region Create Directory Async
+
+    #endregion
     public async Task<bool> CreateDirectoryAsync(string directory)
     {
         try

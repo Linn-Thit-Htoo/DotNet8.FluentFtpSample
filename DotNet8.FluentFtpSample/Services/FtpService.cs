@@ -1,5 +1,5 @@
-﻿using FluentFTP;
-using System.Net;
+﻿using System.Net;
+using FluentFTP;
 
 namespace DotNet8.FluentFtpSample.Services;
 

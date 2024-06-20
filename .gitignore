@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /DotNet8.FluentFtpSample/appsettings.json
+/DotNet8.FluentFtpSample/appsettings.Development.json

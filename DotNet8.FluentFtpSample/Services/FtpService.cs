@@ -34,6 +34,9 @@ public class FtpService
 
     #endregion
 
+    #region Check Directory Exists Async
+
+    #endregion
     public async Task<bool> CheckDirectoryExistsAsync(string directory)
     {
         try

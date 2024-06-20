@@ -78,6 +78,9 @@ public class FtpService
 
     #endregion
 
+    #region Upload File Async
+
+    #endregion
     public async Task UploadFileAsync(IFormFile file, string directory)
     {
         var tempFilePath = Path.GetTempFileName();

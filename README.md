@@ -11,4 +11,4 @@
 ```
 
 ## Resource
-> [FluentFTP](https://github.com/robinrodricks/FluentFTP)
+> https://github.com/robinrodricks/FluentFTP

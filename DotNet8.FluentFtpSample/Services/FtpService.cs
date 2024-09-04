@@ -5,23 +5,21 @@ namespace DotNet8.FluentFtpSample.Services;
 
 public class FtpService
 {
-    private readonly IConfiguration _configuration;
-    private readonly string _hostName = string.Empty;
     private readonly string _userName = string.Empty;
     private readonly string _password = string.Empty;
     private readonly AsyncFtpClient _ftp;
+    private readonly ILogger<FtpService> _logger;
 
-    public FtpService(IConfiguration configuration)
+    public FtpService(ILogger<FtpService> logger)
     {
-        _configuration = configuration;
-        _hostName = _configuration.GetSection("FtpCredentials")["FtpHostName"]!;
-        _userName = _configuration.GetSection("FtpCredentials")["FtpUserName"]!;
-        _password = _configuration.GetSection("FtpCredentials")["FtpPassword"]!;
+        _userName = "";
+        _password = "";
         _ftp = new AsyncFtpClient
         {
-            Host = _hostName,
+            Host = "",
             Credentials = new NetworkCredential(_userName, _password)
         };
+        _logger = logger;
     }
 
     #region Connect Async
@@ -69,9 +67,9 @@ public class FtpService
         {
             if (ex.InnerException is not null)
             {
-                Console.WriteLine(ex.InnerException);
+                _logger.LogInformation($"Create Directory Error: {ex.InnerException}");
             }
-            Console.WriteLine(ex.ToString());
+            _logger.LogInformation($"Create Directory Error: {ex.ToString()}");
             throw;
         }
     }
@@ -83,6 +81,7 @@ public class FtpService
     public async Task UploadFileAsync(IFormFile file, string directory)
     {
         var tempFilePath = Path.GetTempFileName();
+        _logger.LogInformation($"Upload File Temp File Path: {tempFilePath}");
         try
         {
             using (var stream = new FileStream(tempFilePath, FileMode.Create))
@@ -92,22 +91,23 @@ public class FtpService
 
             var token = new CancellationToken();
             await _ftp.Connect(token);
-            Console.WriteLine("Connected to FTP server.");
+            _logger.LogInformation("Connected to FTP server.");
 
             await _ftp.CreateDirectory(directory, token);
-            Console.WriteLine($"Remote directory '{directory}' checked/created.");
+            _logger.LogInformation($"Remote directory '{directory}' checked/created.");
 
             var remoteFilePath = Path.Combine(directory, file.FileName).Replace("\\", "/");
+            _logger.LogInformation($"Remote File Path: {remoteFilePath}");
 
             var success = await _ftp.UploadFile(tempFilePath, remoteFilePath, token: token);
-            Console.WriteLine("File Uploaded Successfully!");
+            _logger.LogInformation("File Uploaded Successfully!");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Exception: {ex.Message}");
+            _logger.LogInformation($"Upload File Exception: {ex.Message}");
             if (ex.InnerException != null)
             {
-                Console.WriteLine($"Inner Exception: {ex.InnerException.Message}");
+                _logger.LogInformation($"Upload File Inner Exception: {ex.InnerException.Message}");
             }
             throw;
         }
@@ -116,7 +116,7 @@ public class FtpService
             if (File.Exists(tempFilePath))
             {
                 File.Delete(tempFilePath);
-                Console.WriteLine("Temporary file deleted.");
+                _logger.LogInformation("Temporary file deleted.");
             }
         }
     }
@@ -133,15 +133,15 @@ public class FtpService
             await _ftp.Connect(token);
 
             await _ftp.DeleteFile(filePath);
-            Console.WriteLine("File Deleted Successfully!");
+            _logger.LogInformation("File Deleted Successfully!");
         }
         catch (Exception ex)
         {
             if (ex.InnerException is not null)
             {
-                Console.WriteLine(ex.InnerException.Message);
+                _logger.LogInformation($"Delete File Exception: {ex.InnerException.Message}");
             }
-            Console.WriteLine(ex.Message);
+            _logger.LogInformation(ex.Message);
         }
     }
 

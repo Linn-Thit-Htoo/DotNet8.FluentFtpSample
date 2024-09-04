@@ -15,7 +15,7 @@ public class BlogController : ControllerBase
         _ftpService = ftpService;
     }
 
-    [HttpGet]
+    [HttpGet("CheckDirectory")]
     public async Task<IActionResult> CheckDirectoryExists(string directory)
     {
         try
@@ -29,7 +29,7 @@ public class BlogController : ControllerBase
         }
     }
 
-    [HttpPost]
+    [HttpPost("CreateDirectory")]
     public async Task<IActionResult> CreateDirectory(string directory)
     {
         try
@@ -48,7 +48,7 @@ public class BlogController : ControllerBase
     {
         try
         {
-            await _ftpService.UploadFileAsync(requestModel.File, "testing");
+            await _ftpService.UploadFileAsync(requestModel.File, requestModel.DirectoryName);
             return Ok(requestModel);
         }
         catch (Exception ex)
@@ -57,12 +57,12 @@ public class BlogController : ControllerBase
         }
     }
 
-    [HttpDelete]
-    public async Task<IActionResult> DeleteFile()
+    [HttpDelete("DeleteFile")]
+    public async Task<IActionResult> DeleteFile(string path)
     {
         try
         {
-            await _ftpService.DeleteFileAsync("/testing/profile.png");
+            await _ftpService.DeleteFileAsync(path);
             return Ok();
         }
         catch (Exception ex)

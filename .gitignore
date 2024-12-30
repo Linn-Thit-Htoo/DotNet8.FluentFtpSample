@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /DotNet8.FluentFtpSample/appsettings.json
 /DotNet8.FluentFtpSample/appsettings.Development.json
+/DotNet8.FluentFtpSample/.env
